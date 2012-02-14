@@ -12,8 +12,8 @@ mkdir build
 PARAMS="--log-junit=../build/junit.xml"
 
 # Figure out what bootstrap fike to use
-if [ "${KOHANA_VERSION%.*}" == "3.0" ]; then
-	PARAMS="${PARAMS} --bootstrap=test1"
+if [ "${KOHANA_SERIES}" == "3.1" ]; then
+	PARAMS="${PARAMS} --bootstrap=modules/unittest/bootstrap.php"
 else
 	PARAMS="${PARAMS} --bootstrap=modules/unittest/bootstrap_all_modules.php"
 fi
