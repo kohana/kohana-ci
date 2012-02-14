@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Enable command tracing
+set -o xtrace
+
+# Figure out the source folder
+SOURCEDIR=${SOURCEDIR:-source}
+
+# Figure out what version of Kohana we are building
+pushd ${SOURCEDIR}
+if [ -f "system/classes/kohana/core.php" ];
+then
+	KOHANA_VERSION=`php -r "define('SYSPATH',''); include 'system/classes/kohana/core.php'; echo Kohana_Core::VERSION;"`
+else
+	KOHANA_VERSION=`php -r "define('SYSPATH',''); include 'system/classes/Kohana/Core.php'; echo Kohana_Core::VERSION;"`
+fi
+popd
+
+KOHANA_SERIES=${KOHANA_VERSION%\.[0-9]*} # eg "3.3"
+
+# Is this a master or develop branch build?
+case "$GIT_BRANCH" in
+    *master ) export KOHANA_BRANCH_TYPE="master" ;;
+    *develop ) export KOHANA_BRANCH_TYPE="develop" ;;
+esac
