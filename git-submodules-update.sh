@@ -1,5 +1,5 @@
 #!/bin/bash
-env
+
 # Prepare the environment with some common variables
 BASEDIR=$(dirname $0)
 . $BASEDIR/environment
@@ -30,8 +30,7 @@ then
         fi
 else
 	git submodule foreach git checkout ${GIT_BRANCH#origin/}
-	git submodule foreach git pull
-	git submodule foreach git push
+	git submodule foreach git pull --ff-only
 	git commit -a -m "Update submodules"
 fi
 
